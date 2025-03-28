@@ -2,9 +2,13 @@ package web.controller;
 
 import hiber.entity.User;
 import hiber.service.UserService;
+
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -31,7 +35,10 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String saveUser(@ModelAttribute User user) {
+    public String saveUser(@ModelAttribute @Validated User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user-save-form";
+        }
         userService.saveUser(user);
         return "redirect:/users";
     }
@@ -43,7 +50,11 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(@ModelAttribute User user) {
+    public String updateUser(@ModelAttribute @Validated User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "user-edit-form";
+        }
+
         userService.updateUser(user);
         return "redirect:/users";
     }

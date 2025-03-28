@@ -10,13 +10,16 @@
 <form th:action="@{/users/add}" th:object="${user}" method="post">
 
     <label for="name">Имя:</label>
-    <input type="text" id="name" th:field="*{name}" required>
+    <input type="text" id="name" th:field="*{name}">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
 
     <label for="age">Возраст:</label>
-    <input type="text" id="age" th:field="*{age}" required>
+    <input type="text" id="age" th:field="*{age}">
+    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</div>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" th:field="*{email}" required>
+    <input type="email" id="email" th:field="*{email}">
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
 
     <button type="submit">Сохранить</button>
 </form>
